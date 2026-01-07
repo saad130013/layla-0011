@@ -49,7 +49,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
         @media print {
           @page {
             size: A4 landscape;
-            margin: 15mm 10mm 15mm 10mm;
+            margin: 10mm 8mm 10mm 8mm;
           }
           body {
             background: white !important;
@@ -59,42 +59,41 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           }
           .no-print { display: none !important; }
           
-          /* Force LTR for Regulatory PDF */
           #pdf-content {
             direction: ltr !important;
             text-align: left !important;
-            font-family: sans-serif !important;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
             width: 100% !important;
           }
 
-          /* Fixed Header */
+          /* Fixed Header - Compact */
           .print-header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 60px;
+            height: 45px;
             display: flex !important;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #1e1b4b;
-            padding-bottom: 10px;
+            border-bottom: 1.5px solid #1e1b4b;
+            padding-bottom: 5px;
             background: white;
             z-index: 1000;
           }
 
-          /* Fixed Footer */
+          /* Fixed Footer - Compact */
           .print-footer {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 40px;
+            height: 30px;
             display: flex !important;
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid #e2e8f0;
-            font-size: 8pt;
+            font-size: 7pt;
             color: #64748b;
             background: white;
             z-index: 1000;
@@ -103,58 +102,69 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           .print-footer::after {
             counter-increment: page;
             content: "Page " counter(page);
+            font-weight: bold;
           }
 
-          /* Content Spacing for Fixed Elements */
+          /* Content Spacing */
           .content-wrapper {
-            margin-top: 70px;
-            margin-bottom: 50px;
+            margin-top: 55px;
+            margin-bottom: 35px;
           }
 
-          /* Table Optimization */
+          /* Table Optimization for 15+ Rows */
           table {
             width: 100% !important;
             border-collapse: collapse !important;
             table-layout: fixed;
-            font-size: 8pt !important;
+            font-size: 7.5pt !important;
           }
           thead { display: table-header-group !important; }
           th {
             background-color: #1e1b4b !important;
             color: white !important;
-            border: 1px solid #e2e8f0 !important;
-            padding: 8px !important;
+            border: 1px solid #cbd5e1 !important;
+            padding: 4px 6px !important;
             text-align: left !important;
+            font-weight: 800;
+            text-transform: uppercase;
           }
           td {
             border: 1px solid #e2e8f0 !important;
-            padding: 6px !important;
+            padding: 3px 6px !important; /* Reduced vertical padding */
             word-wrap: break-word;
+            line-height: 1.1;
           }
           tr { page-break-inside: avoid !important; }
-
-          /* KPI Compact for Print */
+          
+          /* Compact KPI for Print */
           .kpi-row {
             display: flex !important;
             flex-direction: row !important;
-            gap: 20px !important;
-            margin-bottom: 20px !important;
+            gap: 10px !important;
+            margin-bottom: 12px !important;
           }
           .kpi-card {
             flex: 1;
-            padding: 10px;
+            padding: 6px 12px !important;
             border: 1px solid #e2e8f0;
-            border-radius: 8px;
+            border-radius: 6px;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
           }
+          .kpi-card svg { width: 14px; height: 14px; }
+          .kpi-card p { font-size: 6.5pt !important; margin: 0; }
+          .kpi-card h4 { font-size: 11pt !important; margin: 0; line-height: 1; }
+
+          h2 { font-size: 10pt !important; margin-bottom: 6px !important; }
         }
 
-        /* Screen Only Header */
+        /* Screen Only UI Header */
         .print-header, .print-footer { display: none; }
-        
         #pdf-content { direction: ltr; }
       `}</style>
 
-      {/* Screen Interface Controls */}
+      {/* Screen Interface Controls - NO PRINT */}
       <div className="no-print bg-white p-6 rounded-[24px] shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-4">
           <div className="p-3 bg-indigo-900 text-white rounded-xl shadow-lg">
@@ -209,94 +219,89 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
         {/* Fixed Elements for Print */}
         <div className="print-header">
           <div>
-            <h1 className="text-lg font-black text-indigo-950 m-0">OPERATIONAL MANPOWER REPORT</h1>
-            <p className="text-[9pt] font-bold text-slate-500 m-0">Region Identifier: <span className="text-indigo-800">{selectedRegion}</span></p>
+            <h1 className="text-sm font-black text-indigo-950 m-0 uppercase">Operational Manpower Ledger</h1>
+            <p className="text-[7pt] font-bold text-slate-500 m-0">Region Identifier: <span className="text-indigo-800">{selectedRegion}</span></p>
           </div>
           <div className="text-right">
-            <div className="flex items-center gap-2 justify-end">
-              <span className="text-[7pt] font-black text-slate-400 uppercase">Regulatory Audit Seal</span>
-              <ShieldCheck size={16} className="text-indigo-900" />
+            <div className="flex items-center gap-1 justify-end">
+              <span className="text-[6pt] font-black text-slate-400 uppercase">Audit Sealed</span>
+              <ShieldCheck size={12} className="text-indigo-900" />
             </div>
-            <p className="text-[8pt] font-black text-indigo-950 m-0">REF: {reportRef}</p>
-            <p className="text-[7pt] text-slate-400 m-0 font-bold">{reportDate}</p>
+            <p className="text-[7pt] font-black text-indigo-950 m-0">REF: {reportRef}</p>
           </div>
         </div>
 
         <div className="print-footer">
-          <p className="m-0 font-black">Regulatory Data Audit System • Integrated Compliance Protocol</p>
-          <p className="m-0 italic">Authorized Document: {reportRef}</p>
+          <p className="m-0 font-bold">Regulatory Data Audit System • Standardized Compliance Report</p>
+          <p className="m-0 opacity-50 text-[6pt]">Generated on {reportDate}</p>
         </div>
 
         {/* Content Wrapper */}
-        <div className="content-wrapper space-y-8">
+        <div className="content-wrapper space-y-4">
           
-          {/* Section: Operational Summary */}
+          {/* Compact Operational Summary */}
           <section>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-1 h-6 bg-indigo-900 rounded-full"></div>
-              <h2 className="text-base font-black text-indigo-950 uppercase tracking-tight">I. Operational Summary</h2>
-            </div>
-            <div className="kpi-row grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="kpi-card bg-indigo-50/30 p-5 rounded-2xl border border-indigo-100 flex items-center gap-4">
-                <div className="p-3 bg-white rounded-xl shadow-sm text-indigo-900"><Users size={20}/></div>
+            <div className="kpi-row">
+              <div className="kpi-card">
+                <Users className="text-indigo-900"/>
                 <div>
-                  <p className="text-[8pt] font-black text-slate-400 uppercase">Total Workforce</p>
-                  <p className="text-xl font-black text-indigo-950">{stats.total} <span className="text-[10pt] font-medium opacity-50">Staff</span></p>
+                  <p className="font-black text-slate-400 uppercase">Total Workforce</p>
+                  <h4>{stats.total} <span className="text-[7pt] font-medium opacity-50">Staff</span></h4>
                 </div>
               </div>
-              <div className="kpi-card bg-slate-50/50 p-5 rounded-2xl border border-slate-100 flex items-center gap-4">
-                <div className="p-3 bg-white rounded-xl shadow-sm text-slate-500"><MapPin size={20}/></div>
+              <div className="kpi-card">
+                <MapPin className="text-slate-500"/>
                 <div>
-                  <p className="text-[8pt] font-black text-slate-400 uppercase">Active Locations</p>
-                  <p className="text-xl font-black text-indigo-950">{stats.locations}</p>
+                  <p className="font-black text-slate-400 uppercase">Active Locations</p>
+                  <h4>{stats.locations}</h4>
                 </div>
               </div>
-              <div className="kpi-card bg-orange-50/30 p-5 rounded-2xl border border-orange-100 flex items-center gap-4">
-                <div className="p-3 bg-white rounded-xl shadow-sm text-orange-600"><FileCheck size={20}/></div>
+              <div className="kpi-card">
+                <FileCheck className="text-orange-600"/>
                 <div>
-                  <p className="text-[8pt] font-black text-slate-400 uppercase">Supervisors</p>
-                  <p className="text-xl font-black text-indigo-950">{stats.supervisors}</p>
+                  <p className="font-black text-slate-400 uppercase">Supervisors</p>
+                  <h4>{stats.supervisors}</h4>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* Section: Detailed Manpower Ledger */}
-          <section className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-1 h-6 bg-indigo-900 rounded-full"></div>
-              <h2 className="text-base font-black text-indigo-950 uppercase tracking-tight">II. Detailed Manpower Ledger</h2>
-            </div>
+          {/* Detailed Ledger Table */}
+          <section className="space-y-2">
+            <h2 className="text-sm font-black text-indigo-950 uppercase tracking-tight flex items-center gap-2">
+              <div className="w-0.5 h-3 bg-indigo-900 rounded-full"></div>
+              Manpower Distribution Ledger
+            </h2>
             
-            <div className="overflow-hidden border border-slate-200 rounded-2xl shadow-sm">
+            <div className="overflow-hidden border border-slate-200 rounded-xl shadow-sm print:rounded-none print:border-slate-300">
               <table className="w-full">
                 <thead>
                   <tr>
                     <th style={{ width: '12%' }}>Civil ID</th>
-                    <th style={{ width: '25%' }}>Full Name (English/Arabic)</th>
+                    <th style={{ width: '28%' }}>Full Name (EN/AR)</th>
                     <th style={{ width: '10%' }}>Emp #</th>
-                    <th style={{ width: '20%' }}>Location</th>
+                    <th style={{ width: '18%' }}>Location</th>
                     <th style={{ width: '18%' }}>Position</th>
-                    <th style={{ width: '15%' }}>Operating Co.</th>
+                    <th style={{ width: '14%' }}>Company</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {filteredData.length > 0 ? filteredData.map((emp, i) => (
-                    <tr key={i}>
+                    <tr key={i} className="print:bg-white">
                       <td className="font-mono font-bold text-indigo-900">{emp["ID#"]}</td>
                       <td>
-                        <div className="font-black text-indigo-950 text-[9pt]">{emp["NAME (ENG)"]}</div>
-                        <div className="text-[7pt] text-slate-400 font-bold">{emp["NAME (AR)"]}</div>
+                        <div className="font-black text-indigo-950">{emp["NAME (ENG)"]}</div>
+                        <div className="text-[6pt] text-slate-400 font-bold">{emp["NAME (AR)"]}</div>
                       </td>
                       <td className="font-mono text-slate-500">{emp["EMP#"]}</td>
                       <td className="font-bold text-slate-700">
                         <div className="flex items-center gap-1">
-                          <Building2 size={10} className="text-slate-300"/>
+                          <Building2 size={8} className="text-slate-300"/>
                           {emp["LOCATION"] || "General Area"}
                         </div>
                       </td>
                       <td>
-                        <span className={`text-[7pt] font-black px-1.5 py-0.5 rounded border ${
+                        <span className={`text-[6.5pt] font-black px-1 py-0 rounded border ${
                           emp.POSITION.toLowerCase().includes('supervisor') 
                           ? 'bg-orange-50 text-orange-700 border-orange-100' 
                           : 'bg-slate-50 text-slate-600 border-slate-100'
@@ -304,11 +309,11 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
                           {emp["POSITION"]}
                         </span>
                       </td>
-                      <td className="text-indigo-800 font-bold uppercase">{emp["COMPANY"]}</td>
+                      <td className="text-indigo-800 font-bold uppercase text-[6.5pt]">{emp["COMPANY"]}</td>
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan={6} className="text-center py-10 text-slate-400 font-bold italic">No data records found for selection.</td>
+                      <td colSpan={6} className="text-center py-6 text-slate-400 font-bold italic">No records found.</td>
                     </tr>
                   )}
                 </tbody>
@@ -316,16 +321,14 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
             </div>
           </section>
 
-          {/* Final Verification Stamp (Print Only) */}
-          <div className="hidden print:block mt-6 pt-6 border-t border-dashed border-slate-200">
-            <div className="flex justify-between items-end">
-              <div className="space-y-1">
-                <p className="text-[8pt] font-black text-slate-900">SYSTEM VERIFIED DATA</p>
-                <p className="text-[7pt] text-slate-400">All records matched against Region: {selectedRegion}</p>
-              </div>
-              <div className="border-2 border-indigo-900 p-2 rounded-lg text-indigo-900 flex flex-col items-center">
-                <span className="text-[6pt] font-black uppercase">Official Seal</span>
-                <ShieldCheck size={24} />
+          {/* Final Stamp - Very Compact */}
+          <div className="hidden print:block mt-4 pt-3 border-t border-dashed border-slate-200">
+            <div className="flex justify-between items-center">
+              <p className="text-[6.5pt] font-black text-slate-400">
+                SYSTEM VERIFIED: All records matched against regional operational database for {selectedRegion}.
+              </p>
+              <div className="border border-indigo-900 px-2 py-0.5 rounded text-indigo-900 font-black text-[6pt] uppercase tracking-tighter">
+                Official Validation Stamp
               </div>
             </div>
           </div>
