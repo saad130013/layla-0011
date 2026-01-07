@@ -163,7 +163,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           }
           .kpi-label { color: #64748b; text-transform: uppercase; font-size: 4.5pt; font-weight: 900; }
 
-          h2 { font-size: 7.5pt !important; margin-bottom: 1px !important; color: #0f766e !important; font-weight: 900; }
+          h2 { font-size: 8pt !important; margin-bottom: 1px !important; color: #0f766e !important; font-weight: 900; }
         }
 
         .print-header, .print-footer { display: none; }
@@ -178,7 +178,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           </div>
           <div>
             <h3 className="text-lg font-black text-slate-900">Regulatory Report Ledger</h3>
-            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Printer Optimized Layout v3.5</p>
+            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Region Optimized v4.0</p>
           </div>
         </div>
         
@@ -223,17 +223,17 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
         {/* PDF Micro Header */}
         <div className="print-header">
           <div>
-            <h1 className="text-[5.5pt] font-black text-teal-700 m-0 uppercase">Compliance Manpower Ledger</h1>
+            <h1 className="text-[5.5pt] font-black text-teal-700 m-0 uppercase">Operational Distribution Ledger</h1>
           </div>
           <div className="flex items-center gap-4">
-            <p className="text-[5pt] font-bold text-slate-400 m-0">Region: <span className="text-teal-900 font-black">{selectedRegion}</span></p>
+            <p className="text-[5pt] font-bold text-slate-400 m-0">Verified Region: <span className="text-teal-900 font-black">{selectedRegion}</span></p>
             <p className="text-[5pt] font-black text-slate-500 m-0 uppercase tracking-tighter">REF: {reportRef}</p>
           </div>
         </div>
 
         <div className="print-footer">
-          <p className="m-0 font-bold">Regulatory Operational Distribution • System Verified Audit</p>
-          <p className="m-0 opacity-60">Date: {reportDate}</p>
+          <p className="m-0 font-bold">Regulatory Operational Distribution • System Verified Audit • {selectedRegion}</p>
+          <p className="m-0 opacity-60">Audit Date: {reportDate}</p>
         </div>
 
         <div className="content-wrapper">
@@ -244,7 +244,11 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
               <span>{stats.total} Staff</span>
             </div>
             <div className="kpi-item">
-              <span className="kpi-label">Locations:</span>
+              <span className="kpi-label">Region ID:</span>
+              <span className="bg-teal-100 text-teal-900 px-1 rounded uppercase">{selectedRegion}</span>
+            </div>
+            <div className="kpi-item">
+              <span className="kpi-label">Deployments:</span>
               <span>{stats.locations} Areas</span>
             </div>
             <div className="kpi-item">
@@ -254,8 +258,9 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           </div>
 
           <section className="space-y-0.5">
-            <h2 className="text-[7.5pt] font-black text-slate-700 uppercase tracking-tight flex items-center gap-1">
-              Distribution Ledger
+            <h2 className="text-[8pt] font-black text-slate-700 uppercase tracking-tight flex items-center justify-between gap-1">
+              <span>DISTRIBUTION LEDGER</span>
+              <span className="text-[6pt] bg-teal-600 text-white px-2 py-0.5 rounded shadow-sm">{selectedRegion}</span>
             </h2>
             
             <div className="overflow-hidden border border-slate-200 rounded-lg print:border-slate-300">
@@ -289,7 +294,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan={6} className="text-center py-4 text-slate-400 font-bold italic text-[6pt]">No data available.</td>
+                      <td colSpan={6} className="text-center py-4 text-slate-400 font-bold italic text-[6pt]">No data available for {selectedRegion}.</td>
                     </tr>
                   )}
                 </tbody>
@@ -299,7 +304,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
 
           <div className="hidden print:block mt-1">
             <p className="text-[4.5pt] font-bold text-slate-300 uppercase text-center tracking-[0.2em] border-t pt-1">
-              REGULATORY CLEARANCE VERIFIED • {selectedRegion} • LOG: {reportRef}
+              REGULATORY CLEARANCE VERIFIED • {selectedRegion} • LOG: {reportRef} • CONFIDENTIAL
             </p>
           </div>
         </div>
