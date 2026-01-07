@@ -1,5 +1,5 @@
 {
   "name": "Regulatory Data Audit & Reporter",
-  "description": "An advanced regulatory data analysis system that ensures strict validation of operational regions and employee counts from Excel files, featuring professional landscape PDF reporting and identity auditing.",
+  "description": "Professional regulatory data analysis system with optimized 1-2 page landscape PDF reporting, featuring fixed headers/footers, automated page numbering, and strict identity validation.",
   "requestFramePermissions": []
 }
