@@ -49,7 +49,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
         @media print {
           @page {
             size: A4 landscape;
-            margin: 8mm 6mm 8mm 6mm;
+            margin: 6mm 5mm 6mm 5mm;
           }
           body {
             background: white !important;
@@ -66,34 +66,34 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
             width: 100% !important;
           }
 
-          /* Ultra Compact Header */
+          /* Nano Header */
           .print-header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 32px;
+            height: 22px;
             display: flex !important;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #1e1b4b;
-            padding-bottom: 2px;
+            padding-bottom: 1px;
             background: white;
             z-index: 1000;
           }
 
-          /* Compact Footer */
+          /* Nano Footer */
           .print-footer {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 20px;
+            height: 16px;
             display: flex !important;
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid #e2e8f0;
-            font-size: 6pt;
+            font-size: 5.5pt;
             color: #64748b;
             background: white;
             z-index: 1000;
@@ -105,57 +105,58 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           }
 
           .content-wrapper {
-            margin-top: 40px;
-            margin-bottom: 25px;
+            margin-top: 26px;
+            margin-bottom: 20px;
           }
 
-          /* Table Optimization for 25+ Rows */
+          /* Table Optimization for 30+ Rows */
           table {
             width: 100% !important;
             border-collapse: collapse !important;
             table-layout: fixed;
-            font-size: 7pt !important; /* Slightly smaller for more rows */
+            font-size: 6.8pt !important;
           }
           thead { display: table-header-group !important; }
           th {
             background-color: #1e1b4b !important;
             color: white !important;
             border: 1px solid #cbd5e1 !important;
-            padding: 2px 4px !important;
+            padding: 1px 3px !important;
             text-align: left !important;
             font-weight: 800;
+            height: 14px;
           }
           td {
             border: 1px solid #e2e8f0 !important;
-            padding: 1px 4px !important; /* Minimum padding to fit 25 names */
+            padding: 1px 3px !important;
             word-wrap: break-word;
             line-height: 1.0;
-            height: 18px; /* Fixed height to control row count per page */
+            height: 16px; /* Optimized height for 30 names */
           }
           tr { page-break-inside: avoid !important; }
           
-          /* Inline Info Bar instead of Cards */
+          /* Nano Info Bar */
           .kpi-row {
             display: flex !important;
             flex-direction: row !important;
-            gap: 15px !important;
-            margin-bottom: 8px !important;
+            gap: 12px !important;
+            margin-bottom: 4px !important;
             background: #f8fafc !important;
-            padding: 4px 8px !important;
-            border-radius: 4px;
+            padding: 2px 6px !important;
+            border-radius: 3px;
             border: 1px solid #e2e8f0;
           }
           .kpi-item {
             display: flex !important;
             align-items: center !important;
-            gap: 4px !important;
-            font-size: 7pt !important;
+            gap: 3px !important;
+            font-size: 6.5pt !important;
             font-weight: 800;
             color: #1e1b4b;
           }
-          .kpi-label { color: #64748b; text-transform: uppercase; font-size: 6pt; }
+          .kpi-label { color: #64748b; text-transform: uppercase; font-size: 5.5pt; }
 
-          h2 { font-size: 9pt !important; margin-bottom: 4px !important; }
+          h2 { font-size: 7.5pt !important; margin-bottom: 2px !important; }
         }
 
         .print-header, .print-footer { display: none; }
@@ -170,7 +171,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           </div>
           <div>
             <h3 className="text-lg font-black text-slate-900">Official Report Generator</h3>
-            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Regulatory Standards v2.2</p>
+            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Regulatory Standards v2.3</p>
           </div>
         </div>
         
@@ -217,18 +218,18 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
         {/* Fixed Elements for Print */}
         <div className="print-header">
           <div>
-            <h1 className="text-xs font-black text-indigo-950 m-0 uppercase">Operational Manpower Ledger</h1>
+            <h1 className="text-[7pt] font-black text-indigo-950 m-0 uppercase leading-none">Manpower Ledger</h1>
           </div>
-          <div className="flex items-center gap-4">
-            <p className="text-[7pt] font-bold text-slate-500 m-0">Region: <span className="text-indigo-800 font-black">{selectedRegion}</span></p>
-            <p className="text-[7pt] font-black text-indigo-950 m-0">REF: {reportRef}</p>
-            <ShieldCheck size={10} className="text-indigo-900" />
+          <div className="flex items-center gap-3">
+            <p className="text-[6.5pt] font-bold text-slate-500 m-0">Region: <span className="text-indigo-800 font-black">{selectedRegion}</span></p>
+            <p className="text-[6.5pt] font-black text-indigo-950 m-0">REF: {reportRef}</p>
+            <ShieldCheck size={9} className="text-indigo-900" />
           </div>
         </div>
 
         <div className="print-footer">
-          <p className="m-0 font-bold">Regulatory Compliance Data • Official Audit Document</p>
-          <p className="m-0 opacity-50">Generated on {reportDate}</p>
+          <p className="m-0 font-bold">Regulatory Compliance Ledger • Official Document</p>
+          <p className="m-0 opacity-50">Report Date: {reportDate}</p>
         </div>
 
         {/* Content Wrapper */}
@@ -237,23 +238,23 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           {/* Section I: Operational Summary Bar */}
           <div className="kpi-row">
             <div className="kpi-item">
-              <span className="kpi-label">Total Workforce:</span>
+              <span className="kpi-label">Workforce:</span>
               <span>{stats.total} Staff</span>
             </div>
             <div className="kpi-item">
-              <span className="kpi-label">Active Locations:</span>
+              <span className="kpi-label">Locs:</span>
               <span>{stats.locations}</span>
             </div>
             <div className="kpi-item">
-              <span className="kpi-label">Supervisors:</span>
+              <span className="kpi-label">Supv:</span>
               <span>{stats.supervisors}</span>
             </div>
           </div>
 
           {/* Section II: Ledger Table */}
-          <section className="space-y-1">
-            <h2 className="text-[8pt] font-black text-indigo-950 uppercase tracking-tight flex items-center gap-1">
-              <div className="w-0.5 h-2.5 bg-indigo-900 rounded-full"></div>
+          <section className="space-y-0.5">
+            <h2 className="text-[7.5pt] font-black text-indigo-950 uppercase tracking-tight flex items-center gap-1">
+              <div className="w-0.5 h-2 bg-indigo-900 rounded-full"></div>
               Distribution Ledger
             </h2>
             
@@ -274,18 +275,18 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
                     <tr key={i} className="print:bg-white">
                       <td className="font-mono font-bold text-indigo-900">{emp["ID#"]}</td>
                       <td>
-                        <div className="font-black text-indigo-950">{emp["NAME (ENG)"]}</div>
-                        <div className="text-[5.5pt] text-slate-400 font-bold">{emp["NAME (AR)"]}</div>
+                        <div className="font-black text-indigo-950 leading-none">{emp["NAME (ENG)"]}</div>
+                        <div className="text-[5pt] text-slate-400 font-bold leading-none">{emp["NAME (AR)"]}</div>
                       </td>
                       <td className="font-mono text-slate-500">{emp["EMP#"]}</td>
                       <td className="font-bold text-slate-700">
                         <div className="flex items-center gap-1">
-                          <Building2 size={8} className="text-slate-300"/>
+                          <Building2 size={7} className="text-slate-300"/>
                           {emp["LOCATION"] || "General Area"}
                         </div>
                       </td>
                       <td>
-                        <span className={`text-[6pt] font-black px-1 py-0 rounded border ${
+                        <span className={`text-[5.5pt] font-black px-1 py-0 rounded border ${
                           emp.POSITION.toLowerCase().includes('supervisor') 
                           ? 'bg-orange-50 text-orange-700 border-orange-100' 
                           : 'bg-slate-50 text-slate-600 border-slate-100'
@@ -293,11 +294,11 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
                           {emp["POSITION"]}
                         </span>
                       </td>
-                      <td className="text-indigo-800 font-bold uppercase text-[6pt]">{emp["COMPANY"]}</td>
+                      <td className="text-indigo-800 font-bold uppercase text-[5.5pt]">{emp["COMPANY"]}</td>
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan={6} className="text-center py-4 text-slate-400 font-bold italic">No records.</td>
+                      <td colSpan={6} className="text-center py-2 text-slate-400 font-bold italic">No records.</td>
                     </tr>
                   )}
                 </tbody>
@@ -306,9 +307,9 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           </section>
 
           {/* Verification (Print Only) */}
-          <div className="hidden print:block mt-2">
-            <p className="text-[5.5pt] font-black text-slate-400 uppercase tracking-tighter text-center">
-              SYSTEM VERIFIED DATA • MATCHED AGAINST OPERATIONAL REFERENCE {selectedRegion} • {reportRef}
+          <div className="hidden print:block mt-1">
+            <p className="text-[5pt] font-black text-slate-400 uppercase tracking-tighter text-center">
+              SYSTEM VERIFIED DATA • {selectedRegion} • {reportRef}
             </p>
           </div>
         </div>
