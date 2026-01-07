@@ -49,7 +49,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
         @media print {
           @page {
             size: A4 landscape;
-            margin: 10mm 8mm 10mm 8mm;
+            margin: 8mm 6mm 8mm 6mm;
           }
           body {
             background: white !important;
@@ -62,38 +62,38 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           #pdf-content {
             direction: ltr !important;
             text-align: left !important;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+            font-family: 'Segoe UI', sans-serif !important;
             width: 100% !important;
           }
 
-          /* Fixed Header - Compact */
+          /* Ultra Compact Header */
           .print-header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 45px;
+            height: 32px;
             display: flex !important;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1.5px solid #1e1b4b;
-            padding-bottom: 5px;
+            border-bottom: 1px solid #1e1b4b;
+            padding-bottom: 2px;
             background: white;
             z-index: 1000;
           }
 
-          /* Fixed Footer - Compact */
+          /* Compact Footer */
           .print-footer {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 30px;
+            height: 20px;
             display: flex !important;
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid #e2e8f0;
-            font-size: 7pt;
+            font-size: 6pt;
             color: #64748b;
             background: white;
             z-index: 1000;
@@ -102,69 +102,67 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           .print-footer::after {
             counter-increment: page;
             content: "Page " counter(page);
-            font-weight: bold;
           }
 
-          /* Content Spacing */
           .content-wrapper {
-            margin-top: 55px;
-            margin-bottom: 35px;
+            margin-top: 40px;
+            margin-bottom: 25px;
           }
 
-          /* Table Optimization for 15+ Rows */
+          /* Table Optimization for 25+ Rows */
           table {
             width: 100% !important;
             border-collapse: collapse !important;
             table-layout: fixed;
-            font-size: 7.5pt !important;
+            font-size: 7pt !important; /* Slightly smaller for more rows */
           }
           thead { display: table-header-group !important; }
           th {
             background-color: #1e1b4b !important;
             color: white !important;
             border: 1px solid #cbd5e1 !important;
-            padding: 4px 6px !important;
+            padding: 2px 4px !important;
             text-align: left !important;
             font-weight: 800;
-            text-transform: uppercase;
           }
           td {
             border: 1px solid #e2e8f0 !important;
-            padding: 3px 6px !important; /* Reduced vertical padding */
+            padding: 1px 4px !important; /* Minimum padding to fit 25 names */
             word-wrap: break-word;
-            line-height: 1.1;
+            line-height: 1.0;
+            height: 18px; /* Fixed height to control row count per page */
           }
           tr { page-break-inside: avoid !important; }
           
-          /* Compact KPI for Print */
+          /* Inline Info Bar instead of Cards */
           .kpi-row {
             display: flex !important;
             flex-direction: row !important;
-            gap: 10px !important;
-            margin-bottom: 12px !important;
-          }
-          .kpi-card {
-            flex: 1;
-            padding: 6px 12px !important;
+            gap: 15px !important;
+            margin-bottom: 8px !important;
+            background: #f8fafc !important;
+            padding: 4px 8px !important;
+            border-radius: 4px;
             border: 1px solid #e2e8f0;
-            border-radius: 6px;
+          }
+          .kpi-item {
             display: flex !important;
             align-items: center !important;
-            gap: 8px !important;
+            gap: 4px !important;
+            font-size: 7pt !important;
+            font-weight: 800;
+            color: #1e1b4b;
           }
-          .kpi-card svg { width: 14px; height: 14px; }
-          .kpi-card p { font-size: 6.5pt !important; margin: 0; }
-          .kpi-card h4 { font-size: 11pt !important; margin: 0; line-height: 1; }
+          .kpi-label { color: #64748b; text-transform: uppercase; font-size: 6pt; }
 
-          h2 { font-size: 10pt !important; margin-bottom: 6px !important; }
+          h2 { font-size: 9pt !important; margin-bottom: 4px !important; }
         }
 
-        /* Screen Only UI Header */
         .print-header, .print-footer { display: none; }
         #pdf-content { direction: ltr; }
       `}</style>
 
-      {/* Screen Interface Controls - NO PRINT */}
+      {/* Screen Interface Controls */}
       <div className="no-print bg-white p-6 rounded-[24px] shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-4">
           <div className="p-3 bg-indigo-900 text-white rounded-xl shadow-lg">
@@ -172,7 +170,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           </div>
           <div>
             <h3 className="text-lg font-black text-slate-900">Official Report Generator</h3>
-            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Regulatory Standards v2.1</p>
+            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Regulatory Standards v2.2</p>
           </div>
         </div>
         
@@ -219,70 +217,56 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
         {/* Fixed Elements for Print */}
         <div className="print-header">
           <div>
-            <h1 className="text-sm font-black text-indigo-950 m-0 uppercase">Operational Manpower Ledger</h1>
-            <p className="text-[7pt] font-bold text-slate-500 m-0">Region Identifier: <span className="text-indigo-800">{selectedRegion}</span></p>
+            <h1 className="text-xs font-black text-indigo-950 m-0 uppercase">Operational Manpower Ledger</h1>
           </div>
-          <div className="text-right">
-            <div className="flex items-center gap-1 justify-end">
-              <span className="text-[6pt] font-black text-slate-400 uppercase">Audit Sealed</span>
-              <ShieldCheck size={12} className="text-indigo-900" />
-            </div>
+          <div className="flex items-center gap-4">
+            <p className="text-[7pt] font-bold text-slate-500 m-0">Region: <span className="text-indigo-800 font-black">{selectedRegion}</span></p>
             <p className="text-[7pt] font-black text-indigo-950 m-0">REF: {reportRef}</p>
+            <ShieldCheck size={10} className="text-indigo-900" />
           </div>
         </div>
 
         <div className="print-footer">
-          <p className="m-0 font-bold">Regulatory Data Audit System • Standardized Compliance Report</p>
-          <p className="m-0 opacity-50 text-[6pt]">Generated on {reportDate}</p>
+          <p className="m-0 font-bold">Regulatory Compliance Data • Official Audit Document</p>
+          <p className="m-0 opacity-50">Generated on {reportDate}</p>
         </div>
 
         {/* Content Wrapper */}
-        <div className="content-wrapper space-y-4">
+        <div className="content-wrapper">
           
-          {/* Compact Operational Summary */}
-          <section>
-            <div className="kpi-row">
-              <div className="kpi-card">
-                <Users className="text-indigo-900"/>
-                <div>
-                  <p className="font-black text-slate-400 uppercase">Total Workforce</p>
-                  <h4>{stats.total} <span className="text-[7pt] font-medium opacity-50">Staff</span></h4>
-                </div>
-              </div>
-              <div className="kpi-card">
-                <MapPin className="text-slate-500"/>
-                <div>
-                  <p className="font-black text-slate-400 uppercase">Active Locations</p>
-                  <h4>{stats.locations}</h4>
-                </div>
-              </div>
-              <div className="kpi-card">
-                <FileCheck className="text-orange-600"/>
-                <div>
-                  <p className="font-black text-slate-400 uppercase">Supervisors</p>
-                  <h4>{stats.supervisors}</h4>
-                </div>
-              </div>
+          {/* Section I: Operational Summary Bar */}
+          <div className="kpi-row">
+            <div className="kpi-item">
+              <span className="kpi-label">Total Workforce:</span>
+              <span>{stats.total} Staff</span>
             </div>
-          </section>
+            <div className="kpi-item">
+              <span className="kpi-label">Active Locations:</span>
+              <span>{stats.locations}</span>
+            </div>
+            <div className="kpi-item">
+              <span className="kpi-label">Supervisors:</span>
+              <span>{stats.supervisors}</span>
+            </div>
+          </div>
 
-          {/* Detailed Ledger Table */}
-          <section className="space-y-2">
-            <h2 className="text-sm font-black text-indigo-950 uppercase tracking-tight flex items-center gap-2">
-              <div className="w-0.5 h-3 bg-indigo-900 rounded-full"></div>
-              Manpower Distribution Ledger
+          {/* Section II: Ledger Table */}
+          <section className="space-y-1">
+            <h2 className="text-[8pt] font-black text-indigo-950 uppercase tracking-tight flex items-center gap-1">
+              <div className="w-0.5 h-2.5 bg-indigo-900 rounded-full"></div>
+              Distribution Ledger
             </h2>
             
-            <div className="overflow-hidden border border-slate-200 rounded-xl shadow-sm print:rounded-none print:border-slate-300">
+            <div className="overflow-hidden border border-slate-200 rounded-lg shadow-sm print:rounded-none print:border-slate-300">
               <table className="w-full">
                 <thead>
                   <tr>
                     <th style={{ width: '12%' }}>Civil ID</th>
-                    <th style={{ width: '28%' }}>Full Name (EN/AR)</th>
+                    <th style={{ width: '30%' }}>Full Name (EN/AR)</th>
                     <th style={{ width: '10%' }}>Emp #</th>
                     <th style={{ width: '18%' }}>Location</th>
                     <th style={{ width: '18%' }}>Position</th>
-                    <th style={{ width: '14%' }}>Company</th>
+                    <th style={{ width: '12%' }}>Company</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -291,7 +275,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
                       <td className="font-mono font-bold text-indigo-900">{emp["ID#"]}</td>
                       <td>
                         <div className="font-black text-indigo-950">{emp["NAME (ENG)"]}</div>
-                        <div className="text-[6pt] text-slate-400 font-bold">{emp["NAME (AR)"]}</div>
+                        <div className="text-[5.5pt] text-slate-400 font-bold">{emp["NAME (AR)"]}</div>
                       </td>
                       <td className="font-mono text-slate-500">{emp["EMP#"]}</td>
                       <td className="font-bold text-slate-700">
@@ -301,7 +285,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
                         </div>
                       </td>
                       <td>
-                        <span className={`text-[6.5pt] font-black px-1 py-0 rounded border ${
+                        <span className={`text-[6pt] font-black px-1 py-0 rounded border ${
                           emp.POSITION.toLowerCase().includes('supervisor') 
                           ? 'bg-orange-50 text-orange-700 border-orange-100' 
                           : 'bg-slate-50 text-slate-600 border-slate-100'
@@ -309,11 +293,11 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
                           {emp["POSITION"]}
                         </span>
                       </td>
-                      <td className="text-indigo-800 font-bold uppercase text-[6.5pt]">{emp["COMPANY"]}</td>
+                      <td className="text-indigo-800 font-bold uppercase text-[6pt]">{emp["COMPANY"]}</td>
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan={6} className="text-center py-6 text-slate-400 font-bold italic">No records found.</td>
+                      <td colSpan={6} className="text-center py-4 text-slate-400 font-bold italic">No records.</td>
                     </tr>
                   )}
                 </tbody>
@@ -321,16 +305,11 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
             </div>
           </section>
 
-          {/* Final Stamp - Very Compact */}
-          <div className="hidden print:block mt-4 pt-3 border-t border-dashed border-slate-200">
-            <div className="flex justify-between items-center">
-              <p className="text-[6.5pt] font-black text-slate-400">
-                SYSTEM VERIFIED: All records matched against regional operational database for {selectedRegion}.
-              </p>
-              <div className="border border-indigo-900 px-2 py-0.5 rounded text-indigo-900 font-black text-[6pt] uppercase tracking-tighter">
-                Official Validation Stamp
-              </div>
-            </div>
+          {/* Verification (Print Only) */}
+          <div className="hidden print:block mt-2">
+            <p className="text-[5.5pt] font-black text-slate-400 uppercase tracking-tighter text-center">
+              SYSTEM VERIFIED DATA • MATCHED AGAINST OPERATIONAL REFERENCE {selectedRegion} • {reportRef}
+            </p>
           </div>
         </div>
       </div>
