@@ -66,7 +66,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
             width: 100% !important;
           }
 
-          /* Micro Header - Minimalist & Printer Friendly */
+          /* Micro Header */
           .print-header {
             position: fixed;
             top: 0;
@@ -109,7 +109,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
             margin-bottom: 14px;
           }
 
-          /* Table Design - Matched to Image */
+          /* Table Design from Image */
           table {
             width: 100% !important;
             border-collapse: collapse !important;
@@ -119,51 +119,51 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           }
           thead { display: table-header-group !important; }
           th {
-            background-color: #14b8a6 !important; /* Teal Header */
+            background-color: #14b8a6 !important;
             color: white !important;
             border: 0.5pt solid #0d9488 !important;
             padding: 2px 4px !important;
             text-align: left !important;
             font-weight: 700;
             height: 16px;
-            text-transform: capitalize;
           }
           td {
             border: 0.5pt solid #e2e8f0 !important;
             padding: 1px 4px !important;
             word-wrap: break-word;
             line-height: 1.0;
-            height: 14px; /* Perfectly fits 30-35 names per page */
+            height: 14px;
             vertical-align: middle;
             color: #334155;
           }
-          /* Zebra Stripes from Image */
           tr:nth-child(even) { background-color: #f9fafb !important; }
           tr:nth-child(odd) { background-color: #ffffff !important; }
           tr { page-break-inside: avoid !important; }
 
-          /* Compact KPI Bar */
+          /* Summary Bar Styled like Image 2 */
           .kpi-row {
             display: flex !important;
             flex-direction: row !important;
-            gap: 12px !important;
+            gap: 15px !important;
             margin-bottom: 2px !important;
-            background: #f1f5f9 !important;
-            padding: 1px 6px !important;
-            border-radius: 2px;
+            background: #f8fafc !important;
+            padding: 2px 10px !important;
+            border-radius: 4px;
             border: 0.5pt solid #cbd5e1;
+            align-items: center;
           }
           .kpi-item {
             display: flex !important;
             align-items: center !important;
-            gap: 2px !important;
-            font-size: 5.5pt !important;
+            gap: 4px !important;
+            font-size: 6pt !important;
             font-weight: 700;
-            color: #0f766e;
+            color: #334155;
           }
-          .kpi-label { color: #64748b; text-transform: uppercase; font-size: 4.5pt; font-weight: 900; }
+          .kpi-label { color: #64748b; text-transform: uppercase; font-size: 5pt; font-weight: 900; }
+          .kpi-value { color: #0d9488; } /* Teal value */
 
-          h2 { font-size: 8pt !important; margin-bottom: 1px !important; color: #0f766e !important; font-weight: 900; }
+          h2 { font-size: 8.5pt !important; margin-bottom: 1px !important; color: #0d9488 !important; font-weight: 900; }
         }
 
         .print-header, .print-footer { display: none; }
@@ -178,7 +178,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           </div>
           <div>
             <h3 className="text-lg font-black text-slate-900">Regulatory Report Ledger</h3>
-            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Region Optimized v4.0</p>
+            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Region Optimized v4.5</p>
           </div>
         </div>
         
@@ -197,11 +197,12 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
             onClick={() => window.print()}
             className="bg-teal-700 hover:bg-teal-900 text-white px-6 py-3 rounded-xl font-black text-sm flex items-center gap-2 shadow-xl transition-all"
           >
-            <Printer size={18} /> Export 30-Row PDF
+            <Printer size={18} /> Export Official PDF
           </button>
         </div>
       </div>
 
+      {/* Region selector */}
       <div className="no-print flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
         {validation.validationTable.map(reg => (
           <button
@@ -223,44 +224,44 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
         {/* PDF Micro Header */}
         <div className="print-header">
           <div>
-            <h1 className="text-[5.5pt] font-black text-teal-700 m-0 uppercase">Operational Distribution Ledger</h1>
+            <h1 className="text-[5.5pt] font-black text-teal-700 m-0 uppercase">Operational Manpower Ledger</h1>
           </div>
           <div className="flex items-center gap-4">
-            <p className="text-[5pt] font-bold text-slate-400 m-0">Verified Region: <span className="text-teal-900 font-black">{selectedRegion}</span></p>
+            <p className="text-[5pt] font-bold text-slate-400 m-0 uppercase">Region: <span className="text-teal-900 font-black">{selectedRegion}</span></p>
             <p className="text-[5pt] font-black text-slate-500 m-0 uppercase tracking-tighter">REF: {reportRef}</p>
           </div>
         </div>
 
         <div className="print-footer">
-          <p className="m-0 font-bold">Regulatory Operational Distribution • System Verified Audit • {selectedRegion}</p>
-          <p className="m-0 opacity-60">Audit Date: {reportDate}</p>
+          <p className="m-0 font-bold uppercase">System Verified Audit • {selectedRegion} • Confidential</p>
+          <p className="m-0 opacity-60">Date: {reportDate}</p>
         </div>
 
         <div className="content-wrapper">
           
+          {/* Summary Row Styled like Image 2 */}
           <div className="kpi-row">
             <div className="kpi-item">
-              <span className="kpi-label">Workforce:</span>
-              <span>{stats.total} Staff</span>
+              <span className="kpi-label">REGION:</span>
+              <span className="kpi-value">{selectedRegion}</span>
             </div>
             <div className="kpi-item">
-              <span className="kpi-label">Region ID:</span>
-              <span className="bg-teal-100 text-teal-900 px-1 rounded uppercase">{selectedRegion}</span>
+              <span className="kpi-label">WORKFORCE:</span>
+              <span className="kpi-value">{stats.total} Staff</span>
             </div>
             <div className="kpi-item">
-              <span className="kpi-label">Deployments:</span>
-              <span>{stats.locations} Areas</span>
+              <span className="kpi-label">LOCATIONS:</span>
+              <span className="kpi-value">{stats.locations} Areas</span>
             </div>
             <div className="kpi-item">
-              <span className="kpi-label">Management:</span>
-              <span>{stats.supervisors} Supv</span>
+              <span className="kpi-label">MANAGEMENT:</span>
+              <span className="kpi-value">{stats.supervisors} Supv</span>
             </div>
           </div>
 
           <section className="space-y-0.5">
-            <h2 className="text-[8pt] font-black text-slate-700 uppercase tracking-tight flex items-center justify-between gap-1">
-              <span>DISTRIBUTION LEDGER</span>
-              <span className="text-[6pt] bg-teal-600 text-white px-2 py-0.5 rounded shadow-sm">{selectedRegion}</span>
+            <h2 className="text-[8.5pt] font-black uppercase tracking-tight flex items-center justify-between">
+              <span>DISTRIBUTION LEDGER - {selectedRegion}</span>
             </h2>
             
             <div className="overflow-hidden border border-slate-200 rounded-lg print:border-slate-300">
@@ -304,7 +305,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
 
           <div className="hidden print:block mt-1">
             <p className="text-[4.5pt] font-bold text-slate-300 uppercase text-center tracking-[0.2em] border-t pt-1">
-              REGULATORY CLEARANCE VERIFIED • {selectedRegion} • LOG: {reportRef} • CONFIDENTIAL
+              REGULATORY CLEARANCE VERIFIED • {selectedRegion} • LOG: {reportRef}
             </p>
           </div>
         </div>
